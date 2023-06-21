@@ -19,7 +19,7 @@ jobs:
       - name: "Check out the repo"
         uses: actions/checkout@v3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.TOKEN }}
 
       - name: "Get tag"
         id: "pkg-version"
@@ -43,7 +43,7 @@ jobs:
           # changelog: CHANGELOG.md
           branch: "main"
           ref: refs/tags/v${{ needs.get-tag.outputs.pkg-version }}
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.TOKEN }}
 
   upload-assets:
     name: "Upload assets to Github releases"
@@ -66,11 +66,11 @@ jobs:
       - name: "Upload Binaries"
         uses: "taiki-e/upload-rust-binary-action@v1"
         with:
-          bin: "shazam"
+          bin: "arm-backend"
           target: ${{ matrix.target }}
           archive: $bin-${{ matrix.target }}
           ref: refs/tags/v${{ needs.get-tag.outputs.pkg-version }}
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.TOKEN }}
 
 #   push-to-registry:
 #     name: "Push Docker image to Docker Hub"
